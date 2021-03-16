@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Блог сайта</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Bootstrap core CSS -->
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/templates/home.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+<header th:insert="blocks/header::header"></header>
+<div class="container mt-5 mb-5">
+    <h1>Добавление статьи</h1>
+    <form action="/blog/add" method="post">
+<!-- post - передача скрыто данных на сервер get - передача данных в url-адресе-->
+    <input type="text" name="title" placeholder="Введите название статьи" class="form-control"><br>
+    <input type="text" name="anons" placeholder="Введите анонс статьи" class="form-control"><br>
+    <textarea name="full_text" placeholder="Введите текст статьи" class="form-control"></textarea><br>
+    <!--submit - говорит о том что при нажатии страница будет перезагружаться а данные отправляться на сервер-->
+    <button type="submit" class="btn btn-success">Добавить статью</button>
+    </form>
+</div>
+
+<footer th:insert="blocks/footer::footer"></footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
