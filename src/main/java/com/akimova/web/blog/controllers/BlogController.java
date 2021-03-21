@@ -50,16 +50,51 @@ public class BlogController {
     @GetMapping("/blog/{id}")
     //PathVariable берет динамическое значение из url-адреса
     public String blogDetails(@PathVariable(value = "id") long id, Model model) {
-        if(!postRepository.existsById(id)){
+        if (!postRepository.existsById(id)) {
             return "redirect:/blog";
-
         }
-
-        Optional<Post> post= postRepository.findById(id);
+        Optional<Post> post = postRepository.findById(id);
         ArrayList<Post> res = new ArrayList<>();
         //из класса optional переводим всё в класс arraylist
         post.ifPresent(res::add);
         model.addAttribute("post", res);
         return "blog-details";
+    }
+
+    @GetMapping("/blog/{id}/edit")
+    //PathVariable берет динамическое значение из url-адреса
+    public String blogEdit(@PathVariable(value = "id") long id, Model model) {
+        if (!postRepository.existsById(id)) {
+            return "redirect:/blog";
+        }
+        Optional<Post> post = postRepository.findById(id);
+        ArrayList<Post> res = new ArrayList<>();
+        //из класса optional переводим всё в класс arraylist
+        post.ifPresent(res::add);
+        model.addAttribute("post", res);
+        return "blog-edit";
+    }
+
+    @PostMapping("/blog/{id}/edit")
+    //Получение новых параметров
+    public String blogPostUpdate(@PathVariable(value = "id") long id, @RequestParam String title, @RequestParam String anons, @RequestParam String full_text, Model model) {
+       //orElseThrow() вызывает исключение если запись не найдена
+        Post post = postRepository.findById(id).orElseThrow();
+        post.setTitle(title);
+        post.setAnons(anons);
+        post.setFull_text(full_text);
+        postRepository.save(post);
+
+        return "redirect:/blog";
+    }
+
+    @PostMapping("/blog/{id}/remove")
+    //Получение новых параметров
+    public String blogPostDelete(@PathVariable(value = "id") long id, Model model) {
+        //orElseThrow() вызывает исключение если запись не найдена
+        Post post = postRepository.findById(id).orElseThrow();
+        postRepository.delete(post);
+
+        return "redirect:/blog";
     }
 }
